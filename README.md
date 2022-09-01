@@ -3,4 +3,8 @@ For survey and polls
 # How to Install and Run
 to add
 # Project Documents
-add link to wiki
+[Project documents](https://github.com/koakatta/ku-polls/wiki)<br>
+[Vision Statement](https://github.com/koakatta/ku-polls/wiki/Vision-Statement)<br>
+[Development Plan](https://github.com/koakatta/ku-polls/wiki/Development-Plan)<br>
+[Requirement](https://github.com/koakatta/ku-polls/wiki/Requirements)<br>
+[Iteration 1](https://github.com/koakatta/ku-polls/wiki/Iteration-1-Plan)<br>
