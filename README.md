@@ -4,6 +4,7 @@ For survey and polls
 to add
 # Project Documents
 [Project documents](https://github.com/koakatta/ku-polls/wiki)<br>
+[Task Board](https://github.com/users/koakatta/projects/2)<br>
 [Vision Statement](https://github.com/koakatta/ku-polls/wiki/Vision-Statement)<br>
 [Development Plan](https://github.com/koakatta/ku-polls/wiki/Development-Plan)<br>
 [Requirement](https://github.com/koakatta/ku-polls/wiki/Requirements)<br>
