@@ -9,3 +9,4 @@ to add
 [Development Plan](https://github.com/koakatta/ku-polls/wiki/Development-Plan)<br>
 [Requirement](https://github.com/koakatta/ku-polls/wiki/Requirements)<br>
 [Iteration 1](https://github.com/koakatta/ku-polls/wiki/Iteration-1-Plan)<br>
+[Iteration 2](https://github.com/koakatta/ku-polls/wiki/Iteration-2-Plan)<br>
