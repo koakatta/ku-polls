@@ -1,12 +1,14 @@
+import datetime
+
 from django.contrib import admin
 from django.db import models
-from django.db import models
 from django.utils import timezone
-import datetime
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    end_date = models.DateTimeField('ending date', null=True)
 
     def __str__(self):
         return self.question_text
@@ -19,6 +21,14 @@ class Question(models.Model):
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+    def can_still_vote(self):
+        now = timezone.now()
+        if now < self.end_date:
+            return True
+        else:
+            return False
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
