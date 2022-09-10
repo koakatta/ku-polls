@@ -125,3 +125,34 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class VotingTest(TestCase):
+    def test_voting_can_vote(self):
+        time = timezone.now() + datetime.timedelta(days=30)
+        question = Question(pub_date=timezone.now() + datetime.timedelta(days=-30), end_date=time)
+        self.assertTrue(question.can_vote())
+
+    def test_voting_before_pub(self):
+        time = timezone.now() + datetime.timedelta(days=30)
+        question = Question(pub_date=time)
+        self.assertFalse(question.can_vote())
+
+    def test_voting_exact_time(self):
+        time = timezone.now()
+        question = Question(pub_date=time, end_date=time + datetime.timedelta(hours=2))
+        self.assertTrue(question.can_vote())
+        question = Question(pub_date=time)
+        self.assertTrue(question.can_vote())
+        question = Question(pub_date=time + datetime.timedelta(days=-10), end_date=time)
+        self.assertTrue(question.can_vote())
+
+    def test_voting_after_end_date(self):
+        time = timezone.now()
+        question = Question(pub_date=time + datetime.timedelta(days=-20), end_date=time + datetime.timedelta(days=-10))
+        self.assertFalse(question.can_vote())
+
+    def test_voting_no_end_date(self):
+        time = timezone.now()
+        question = Question(pub_date=time + datetime.timedelta(hours=-1))
+        self.assertTrue(question.can_vote())

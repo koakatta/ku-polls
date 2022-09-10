@@ -22,12 +22,21 @@ class Question(models.Model):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
-    def can_still_vote(self):
+    def can_vote(self):
         now = timezone.now()
-        if now < self.end_date:
-            return True
+        if self.end_date is not None:
+            if self.pub_date <= now:
+                return now <= self.end_date
+            else:
+                return False
         else:
-            return False
+            if self.pub_date <= now:
+                return True
+            else:
+                return False
+
+    def is_published(self):
+        return timezone.now() >= self.pub_date
 
 
 class Choice(models.Model):
