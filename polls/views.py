@@ -50,6 +50,7 @@ def vote(request, question_id):
 
 
 def detail_access(request, pk):
+    """check question can still vote or not then return the page or redirect back with error message"""
     question = get_object_or_404(Question, pk=pk)
     if question.can_vote():
         return render(request, 'polls/detail.html', {'question': question})
