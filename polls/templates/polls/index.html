@@ -4,11 +4,11 @@
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        {% if can_still_vote %}
-            <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-        {% else %}
-            <li><a href="{% url 'polls:results' question.id %}">{{ question.question_text }}</a></li>
-        {% endif %}
+        {% if question.can_vote %}
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> <a href="{% url 'polls:detail' question.id %}">  vote</a>&nbsp;<a href="{% url 'polls:results' question.id %}">result</a></li>
+{% else %}
+                <li>{{ question.question_text }}  vote    <a href="{% url 'polls:results' question.id %}">  result </a></li>
+{% endif %}
     {% endfor %}
     </ul>
 {% else %}
