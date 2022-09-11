@@ -114,7 +114,7 @@ class QuestionDetailViewTests(TestCase):
         future_question = create_question(question_text='Future question.', days=5)
         url = reverse('polls:detail', args=(future_question.id,))
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_past_question(self):
         """
@@ -125,3 +125,44 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class VotingTest(TestCase):
+    def test_voting_can_vote(self):
+        """user time is after publish date and before end date so user can vote"""
+        time = timezone.now() + datetime.timedelta(days=30)
+        question = Question(pub_date=timezone.now() + datetime.timedelta(days=-30), end_date=time)
+        self.assertTrue(question.can_vote())
+
+    def test_voting_before_pub(self):
+        """user time is before publish date so user cannot vote"""
+        time = timezone.now() + datetime.timedelta(days=30)
+        question = Question(pub_date=time)
+        self.assertFalse(question.can_vote())
+        question = Question(pub_date=time, end_date=timezone.now() + datetime.timedelta(days=-10))
+        self.assertFalse(question.can_vote())
+        question = Question(pub_date=time, end_date=timezone.now() + datetime.timedelta(days=10))
+        self.assertFalse(question.can_vote())
+
+    def test_voting_exact_time(self):
+        """one test is with user time is exactly publish date
+        and another test is with user time exactly end date so user can vote in both"""
+        time = timezone.now()
+        question = Question(pub_date=time, end_date=time + datetime.timedelta(hours=2))
+        self.assertTrue(question.can_vote())
+        question = Question(pub_date=time)
+        self.assertTrue(question.can_vote())
+        question = Question(pub_date=time + datetime.timedelta(days=-10), end_date=time)
+        self.assertTrue(question.can_vote())
+
+    def test_voting_after_end_date(self):
+        """user time is after end date so user cannot vote"""
+        time = timezone.now()
+        question = Question(pub_date=time + datetime.timedelta(days=-20), end_date=time + datetime.timedelta(days=-10))
+        self.assertFalse(question.can_vote())
+
+    def test_voting_no_end_date(self):
+        """voting in poll with no end date so user can vote"""
+        time = timezone.now()
+        question = Question(pub_date=time + datetime.timedelta(hours=-1))
+        self.assertTrue(question.can_vote())
