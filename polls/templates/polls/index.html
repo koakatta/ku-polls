@@ -1,13 +1,17 @@
 {% load static %}
-
+{% if messages %}
+{% for message in messages%}
+{{message}}
+{%endfor%}
+{% endif %}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
         {% if question.can_vote %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> <a href="{% url 'polls:detail' question.id %}">  vote</a>&nbsp;<a href="{% url 'polls:results' question.id %}">result</a></li>
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> <a href="{% url 'polls:detail' question.id %}"><button type="button">  vote</button></a>&nbsp;<a href="{% url 'polls:results' question.id %}"><button type="button">result</button></a></li><br>
 {% else %}
-                <li>{{ question.question_text }}  vote    <a href="{% url 'polls:results' question.id %}">  result </a></li>
+        <li>{{ question.question_text }}&nbsp;vote    &nbsp;<a href="{% url 'polls:results' question.id %}"><button type="button">  result </button></a></li><br>
 {% endif %}
     {% endfor %}
     </ul>

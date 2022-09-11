@@ -1,19 +1,15 @@
 <form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-    {% if question.can_vote %}
+    {% csrf_token %}
     <fieldset>
-    <legend><h1>{{ question.question_text }}</h1></legend>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    {% for choice in question.choice_set.all %}
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
         <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-    {% endfor %}
+        {% endfor %}
+    </fieldset>
 
-</fieldset>
-<input type="submit" value="Vote">
-    {% else %}
-{% endif %}
-    <a href="{% url 'polls:index' %}"><button type="button">Back to List of Polls</button></a>
-
-
-</form>
+    <input type="submit" value="Vote">
+    <a href="{% url 'polls:index' %}">
+        <button type="button">Back to List of Polls</button>
+    </a>

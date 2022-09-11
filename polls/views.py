@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -22,6 +22,7 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
+
     def get_queryset(self):
         """
         Excludes any questions that aren't published yet.
@@ -48,7 +49,10 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-# def to_index(request):
-#     return redirect("polls:index")
-#     messages.error(request, "Error. Message not sent.")
-
+def detail_access(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    if question.can_vote():
+        return render(request, 'polls/detail.html', {'question': question})
+    else:
+        messages.error(request, "Not available for voting")
+        return HttpResponseRedirect(reverse("polls:index"))
