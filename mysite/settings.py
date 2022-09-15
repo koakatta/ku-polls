@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os.path
 # from decouple import Config
 from pathlib import Path
 
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-ed1t4gl$ie+(eka@o=o$=9kaxw6v@0wie(+8y=)la(+*yz=o=3'
-SECRET_KEY = config('SECRET_KEY',default='no-keys')
+SECRET_KEY = config('SECRET_KEY', default='no-keys')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -45,7 +46,8 @@ MIDDLEWARE = ['django.middleware.security.SecurityMiddleware', 'django.contrib.s
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
-    {'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [BASE_DIR / 'templates'], 'APP_DIRS': True,
+    {'BACKEND': 'django.template.backends.django.DjangoTemplates', 'DIRS': [os.path.join(BASE_DIR, 'templates')],
+     'APP_DIRS': True,
      'OPTIONS': {'context_processors': ['django.template.context_processors.debug',
                                         'django.template.context_processors.request',
                                         'django.contrib.auth.context_processors.auth',
@@ -86,3 +88,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTHENTICATION_BACKENDS = [
+    # username/password authentication
+    'django.contrib.auth.backends.ModelBackend',
+]
+LOGIN_REDIRECT_URL = '/polls/'  # show list of polls
+LOGOUT_REDIRECT_URL = '/'

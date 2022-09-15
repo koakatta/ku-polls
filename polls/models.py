@@ -1,5 +1,6 @@
 import datetime
 
+import django.contrib.auth.models
 from django.contrib import admin
 from django.db import models
 from django.utils import timezone
@@ -52,3 +53,7 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+
+class User(django.contrib.auth.models.User):
+    """user model"""
