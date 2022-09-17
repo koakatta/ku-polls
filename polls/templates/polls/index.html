@@ -5,6 +5,9 @@
 {%endfor%}
 {% endif %}
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<a href="{% url 'login' %}"><button type="button">  login </button></a>
+<a href="{% url 'logout' %}"><button type="button">  logout </button></a>
+
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
