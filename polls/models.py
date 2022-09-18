@@ -65,11 +65,9 @@ class User(django.contrib.auth.models.User):
     """user model"""
 
 
-
 class Vote(models.Model):
-    user_id = models.IntegerField('user_id',default=0)
+    user_id = models.IntegerField('user_id', default=0)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
-
 
 # def get_user(lazy):
 #     return User.objects.get(id=lazy.id)
