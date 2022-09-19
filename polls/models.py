@@ -1,7 +1,9 @@
 import datetime
 
+import django.contrib.auth.models
 from django.contrib import admin
 from django.db import models
+from django.db.models import AutoField
 from django.utils import timezone
 
 
@@ -46,9 +48,26 @@ class Question(models.Model):
 
 class Choice(models.Model):
     """Choice for question model"""
+    id = AutoField(primary_key=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+
+    @property
+    def votes(self):
+        """count vote for this choice"""
+        return len(Vote.objects.filter(choice_id=self.id))
 
     def __str__(self):
         return self.choice_text
+
+
+class User(django.contrib.auth.models.User):
+    """user model"""
+
+
+class Vote(models.Model):
+    user_id = models.IntegerField('user_id', default=0)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+
+# def get_user(lazy):
+#     return User.objects.get(id=lazy.id)
