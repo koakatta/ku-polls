@@ -7,7 +7,6 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-import polls
 from .models import Question, Choice, Vote
 
 
@@ -55,21 +54,17 @@ def vote(request, question_id):
         vote_ticket = Vote(choice=selected_choice, user_id=user.id)
         try:
             vote_get = Vote.objects.get(choice=selected_choice, user_id=user.id)
-        except (polls.models.Vote.DoesNotExist):
+        except (KeyError, Vote.DoesNotExist):
+            for i in q_set:
+                for j in Vote.objects.filter(user_id=user.id):
+                    if i.id == j.choice_id:
+                        Vote.objects.get(choice_id=j.choice_id, user_id=user.id).delete()
             vote_ticket.save()
         else:
             if vote_ticket.user_id == user.id and vote_ticket.choice_id == selected_choice.id:
                 return render(request, 'polls/detail.html', {'question': question,
                                                              'error_message': "You voted same choice", })
-            else:
-                for i in q_set:
-                    for j in Vote.objects.filter(user_id=user.id):
-                        if i.id == Vote.objects.get(choice_id=i.id, user_id=user.id):
-                            print('hit')
-                            Vote.objects.get(choice_id=j.choice_id, user_id=user.id).delete()
-                        else:
-                            print('not hit')
-                vote_ticket.save()
+
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
