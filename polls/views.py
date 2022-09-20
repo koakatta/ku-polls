@@ -7,8 +7,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from . import models
-from .models import Question, Choice, Vote, User
+import polls
+from .models import Question, Choice, Vote
 
 
 class IndexView(generic.ListView):
@@ -43,6 +43,7 @@ def vote(request, question_id):
     """get choice by POST and add 1 score to choice"""
     question = get_object_or_404(Question, pk=question_id)
     user = request.user
+    q_set = question.choice_set.all()
     if not user.is_authenticated:
         return redirect('login')
     try:
@@ -52,15 +53,32 @@ def vote(request, question_id):
                                                      'error_message': "You didn't select a choice.", })
     else:
         vote_ticket = Vote(choice=selected_choice, user_id=user.id)
-        vote_ticket.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        try:
+            vote_get = Vote.objects.get(choice=selected_choice, user_id=user.id)
+        except (polls.models.Vote.DoesNotExist):
+            vote_ticket.save()
+        else:
+            if vote_ticket.user_id == user.id and vote_ticket.choice_id == selected_choice.id:
+                return render(request, 'polls/detail.html', {'question': question,
+                                                             'error_message': "You voted same choice", })
+            else:
+                for i in q_set:
+                    for j in Vote.objects.filter(user_id=user.id):
+                        if i.id == Vote.objects.get(choice_id=i.id, user_id=user.id):
+                            print('hit')
+                            Vote.objects.get(choice_id=j.choice_id, user_id=user.id).delete()
+                        else:
+                            print('not hit')
+                vote_ticket.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
 def detail_access(request, pk):
     """check question can still vote or not then return the page or redirect back with error message"""
     question = get_object_or_404(Question, pk=pk)
+    user = request.user
     if question.can_vote():
-        return render(request, 'polls/detail.html', {'question': question})
+        return render(request, 'polls/detail.html', {'question': question, 'user': user, 'vote': Vote})
     else:
         messages.error(request, "Not available for voting")
         return HttpResponseRedirect(reverse("polls:index"))
