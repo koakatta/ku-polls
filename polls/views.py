@@ -53,7 +53,7 @@ def vote(request, question_id):
     else:
         vote_ticket = Vote(choice=selected_choice, user_id=user.id)
         try:
-            vote_get = Vote.objects.get(choice=selected_choice, user_id=user.id)
+            Vote.objects.get(choice=selected_choice, user_id=user.id)
         except (KeyError, Vote.DoesNotExist):
             for i in q_set:
                 for j in Vote.objects.filter(user_id=user.id):
@@ -61,7 +61,8 @@ def vote(request, question_id):
                         Vote.objects.get(choice_id=j.choice_id, user_id=user.id).delete()
             vote_ticket.save()
         else:
-            if vote_ticket.user_id == user.id and vote_ticket.choice_id == selected_choice.id:
+            if vote_ticket.user_id == user.id \
+                    and vote_ticket.choice_id == selected_choice.id:
                 return render(request, 'polls/detail.html', {'question': question,
                                                              'error_message': "You voted same choice", })
 
@@ -69,11 +70,13 @@ def vote(request, question_id):
 
 
 def detail_access(request, pk):
-    """check question can still vote or not then return the page or redirect back with error message"""
+    """check question can still vote or not
+    then return the page or redirect back with error message"""
     question = get_object_or_404(Question, pk=pk)
     user = request.user
     if question.can_vote():
-        return render(request, 'polls/detail.html', {'question': question, 'user': user, 'vote': Vote})
+        return render(request, 'polls/detail.html',
+                      {'question': question, 'user': user, 'vote': Vote})
     else:
         messages.error(request, "Not available for voting")
         return HttpResponseRedirect(reverse("polls:index"))

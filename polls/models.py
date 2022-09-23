@@ -27,7 +27,8 @@ class Question(models.Model):
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def can_vote(self):
-        """check end date and publish date with time now and return true if can still vote and return false if end
+        """check end date and publish date with time now and return true
+        if you can still vote and return false if end
         date is passed or publish date not reached """
         now = timezone.now()
         if self.end_date is not None:
