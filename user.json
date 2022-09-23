@@ -1,0 +1,74 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$390000$e68ObTLwzN066WmScYLPaJ$+d/SfleuUIKbrZnIeI/JiCt+lKzldQzzW37dnQCN40c=",
+    "last_login": "2022-09-20T14:12:55.283Z",
+    "is_superuser": true,
+    "username": "koakatta",
+    "first_name": "",
+    "last_name": "",
+    "email": "koakatta@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-09-03T06:07:59.983Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$390000$DMjRP5eEE7SXa5rIVbaFw0$x2s+ckfIo7bk9pBx8lr0yHx8PkFe3F6p3o9XZ9SMOL8=",
+    "last_login": "2022-09-22T06:52:53.398Z",
+    "is_superuser": false,
+    "username": "harry",
+    "first_name": "Harry",
+    "last_name": "",
+    "email": "harry@hackerone.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-09-15T07:24:08.661Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$390000$g405TXA1aghdsg0J7gtbDo$ebU4IR/4Brh0pQiBYkoAa6O8VZX1yzAQDzOjh/H7ui8=",
+    "last_login": "2022-09-20T13:50:05.010Z",
+    "is_superuser": false,
+    "username": "demo1",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-09-18T14:10:54.305Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$390000$S49LDKTl2LPgKcVtJ2vjZ5$3iFtUuBo6bw7NMSUaygUhp6Eufse8ElDniNLbKxjWKo=",
+    "last_login": "2022-09-20T13:50:22.007Z",
+    "is_superuser": false,
+    "username": "demo2",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2022-09-18T14:11:45.357Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
