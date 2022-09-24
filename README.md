@@ -1,6 +1,16 @@
 # ku-polls
 For survey and polls
-# How to Install and Run
+# How to Install
+1. clone this repository `git clone https://github.com/koakatta/ku-polls`
+2. set up virtual environment<br>
+`python -m venv env`<br>
+`. env/bin/activate`
+3. install requirements<br>
+`pip install -r requirements.txt`
+4. load data<br>
+`python manage.py migrate`<br>
+`python manage.py loaddata polls.json user.json`
+# How to Run
 to add
 # Project Documents
 [Project documents](https://github.com/koakatta/ku-polls/wiki)<br>
