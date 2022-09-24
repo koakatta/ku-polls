@@ -11,7 +11,10 @@ For survey and polls
 `python manage.py migrate`<br>
 `python manage.py loaddata polls.json user.json`
 # How to Run
-to add
+1. active virtual environment<br>
+`. env/bin/activate`
+2. run server<br>
+`python manage.py runserver`
 # Project Documents
 [Project documents](https://github.com/koakatta/ku-polls/wiki)<br>
 [Task Board](https://github.com/users/koakatta/projects/2)<br>
