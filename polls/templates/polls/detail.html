@@ -4,6 +4,9 @@
         <legend><h1>{{ question.question_text }}</h1></legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% for choice in question.choice_set.all %}
+        {%if user.id == None %}
+         <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        {% else %}
         {% for vote in vote.all %}
         {%if vote.user_id == user.id %}
         {% if choice.id == vote.choice_id and user.id == vote.user_id %}
@@ -13,6 +16,7 @@
         {% endif%}
         {% endif%}
         {% endfor %}
+        {% endif%}
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
     </fieldset>
