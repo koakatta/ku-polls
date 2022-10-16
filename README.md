@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/github/koakatta/ku-polls/branch/main/graph/badge.svg?token=EVBF4Z8OOQ)](https://codecov.io/github/koakatta/ku-polls)
+[![run unittest](https://github.com/koakatta/ku-polls/actions/workflows/unittest.yml/badge.svg)](https://github.com/koakatta/ku-polls/actions/workflows/unittest.yml)[![codecov](https://codecov.io/github/koakatta/ku-polls/branch/main/graph/badge.svg?token=EVBF4Z8OOQ)](https://codecov.io/github/koakatta/ku-polls)
 # ku-polls
 For survey and polls
 # How to Install
