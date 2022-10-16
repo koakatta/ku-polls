@@ -1,4 +1,5 @@
 # .coveragerc to control coverage.py
 [run]
 branch = True
-source = /polls/*
+source=polls
+omit=polls\__init__.py,polls\migrations\*
